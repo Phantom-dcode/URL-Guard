@@ -6,7 +6,7 @@ WORKDIR /app
 COPY package.json package-lock.json* bun.lock* ./
 
 # Install production dependencies
-RUN npm install --omit=dev
+RUN npm install --omit=dev --legacy-peer-deps
 
 # Copy application files and models
 COPY server.js ./
