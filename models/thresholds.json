@@ -1,0 +1,12 @@
+{
+  "low_threshold": 0.38,
+  "high_threshold": 0.81,
+  "policy": {
+    "safe_band": "score < 0.38",
+    "suspicious_band": "0.38 <= score <= 0.81",
+    "malicious_band": "score > 0.81"
+  },
+  "score_description": "Model score represents the Random Forest tree ensemble predicted probability of maliciousness P(malicious|features).",
+  "documentation": "Thresholds configured strictly per operational specification: Score < 0.38 Safe / Low Risk, 0.38 <= score <= 0.81 Suspicious, score > 0.81 Malicious / High Risk. Must be validated against a held-out test dataset.",
+  "validation_samples": 2421
+}

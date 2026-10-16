@@ -1,0 +1,6 @@
+{
+  "name": "URL-Guard - AI-Based Malicious URL Detection",
+  "description": "Production-grade, zero-network URL inspection with domain-grouped Random Forest ML, deterministic threat rules, and explainable feature attribution.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

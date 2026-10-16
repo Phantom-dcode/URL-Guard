@@ -1,0 +1,84 @@
+{
+  "evaluation_summary": {
+    "primary_model": "RandomForestClassifier",
+    "baseline_model": "LogisticRegression",
+    "primary_split": "Domain-Grouped Split (GroupShuffleSplit by Registered Domain)",
+    "leakage_comparison_split": "Random Split (StratifiedShuffleSplit)",
+    "leakage_gap_insight": "Random split overestimates real-world accuracy due to domain memorization. Domain-grouped split rigorously tests generalization on completely unseen domains."
+  },
+  "domain_grouped_split": {
+    "test_sample_count": 2421,
+    "random_forest_primary": {
+      "accuracy": 0.8133,
+      "precision": 0.8417,
+      "recall": 0.8345,
+      "f1_score": 0.8381,
+      "roc_auc": 0.8869,
+      "false_positive_rate": 0.2159,
+      "confusion_matrix": {
+        "true_negatives": 799,
+        "false_positives": 220,
+        "false_negatives": 232,
+        "true_positives": 1170
+      }
+    },
+    "logistic_regression_baseline": {
+      "accuracy": 0.7637,
+      "precision": 0.8232,
+      "recall": 0.7539,
+      "f1_score": 0.787,
+      "roc_auc": 0.8269,
+      "false_positive_rate": 0.2228,
+      "confusion_matrix": {
+        "true_negatives": 792,
+        "false_positives": 227,
+        "false_negatives": 345,
+        "true_positives": 1057
+      }
+    }
+  },
+  "random_split": {
+    "test_sample_count": 4797,
+    "random_forest": {
+      "accuracy": 0.8251,
+      "precision": 0.8325,
+      "recall": 0.8141,
+      "f1_score": 0.8232,
+      "roc_auc": 0.9063,
+      "false_positive_rate": 0.1639,
+      "confusion_matrix": {
+        "true_negatives": 2005,
+        "false_positives": 393,
+        "false_negatives": 446,
+        "true_positives": 1953
+      }
+    },
+    "logistic_regression": {
+      "accuracy": 0.723,
+      "precision": 0.7667,
+      "recall": 0.6411,
+      "f1_score": 0.6983,
+      "roc_auc": 0.7921,
+      "false_positive_rate": 0.1952,
+      "confusion_matrix": {
+        "true_negatives": 1930,
+        "false_positives": 468,
+        "false_negatives": 861,
+        "true_positives": 1538
+      }
+    }
+  },
+  "operational_thresholds": {
+    "score_description": "model score (Random Forest tree ensemble predicted probability)",
+    "low_threshold": 0.5,
+    "high_threshold": 0.6,
+    "policy": {
+      "safe_band": "score < 0.5",
+      "suspicious_band": "0.5 <= score < 0.6",
+      "malicious_band": "score >= 0.6 (with >= 2 rule flags or confirmed threat intel)"
+    },
+    "safe_band_target_fpr": 0.02,
+    "safe_band_empirical_fnr": 0.223,
+    "validation_samples": 2421
+  }
+}

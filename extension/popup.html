@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>URL Guard Extension</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="extension-container">
+    <!-- Header -->
+    <header class="ext-header">
+      <div class="brand">
+        <div class="logo-shield">
+          <img src="icons/icon48.png" width="22" height="22" alt="URL Guard Emblem" style="border-radius: 5px; object-fit: contain;" />
+        </div>
+        <div class="brand-text">
+          <span class="brand-name">URL Guard</span>
+          <span class="brand-tag">AI Protection</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <button id="toggle-settings-btn" class="icon-btn" title="API Settings">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+          </svg>
+        </button>
+        <button id="open-dashboard-btn" class="icon-btn" title="Open Web Dashboard">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+            <polyline points="15 3 21 3 21 9"></polyline>
+            <line x1="10" y1="14" x2="21" y2="3"></line>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Configurable API Settings Panel (Collapsible) -->
+    <div id="settings-panel" class="settings-panel hidden">
+      <div class="settings-title">
+        <span>Backend API Base URL</span>
+        <span id="settings-conn-indicator" style="font-size:10px;color:#94a3b8;">Local ML Model</span>
+      </div>
+      <div class="settings-row">
+        <input type="text" id="api-base-url-input" class="settings-input" value="http://localhost:3000" placeholder="http://localhost:3000" />
+        <button id="save-api-btn" class="settings-btn primary">Save</button>
+        <button id="test-api-btn" class="settings-btn">Test</button>
+      </div>
+      <div id="settings-status-msg" class="settings-status">Connected to backend ML service (/api/analyze)</div>
+    </div>
+
+    <!-- Active Tab Inspection Card -->
+    <div class="target-card">
+      <div class="target-label">Current Page URL</div>
+      <div id="target-url-text" class="target-url">Loading active tab...</div>
+    </div>
+
+    <!-- Security Gauge & Verdict Section -->
+    <div class="verdict-card">
+      <div class="gauge-wrapper">
+        <svg class="progress-ring" width="80" height="80">
+          <circle class="progress-ring__circle-bg" stroke="#1e293b" stroke-width="6" fill="transparent" r="34" cx="40" cy="40"/>
+          <circle id="gauge-circle" class="progress-ring__circle" stroke="#10b981" stroke-width="6" stroke-linecap="round" fill="transparent" r="34" cx="40" cy="40"/>
+        </svg>
+        <div class="gauge-center">
+          <span id="gauge-score" class="score-number">0.00</span>
+          <span class="score-label">Score</span>
+        </div>
+      </div>
+
+      <div class="verdict-info">
+        <div id="verdict-badge" class="verdict-badge safe">Safe (Low Risk)</div>
+        <div id="verdict-subtitle" class="verdict-desc">URL matches benign patterns</div>
+        <div class="threshold-markers">
+          <span>Safe &lt;0.38</span>
+          <span>Suspicious 0.38-0.81</span>
+          <span>Malicious &gt;0.81</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Multilingual Simple Warning Explainer -->
+    <div class="explainer-section">
+      <div class="explainer-header">
+        <div class="explainer-title">
+          <span class="shield-dot"></span>
+          Elderly-Friendly Warning Explainer
+        </div>
+        <!-- Language Switcher -->
+        <select id="ext-lang-select" class="lang-select">
+          <option value="en">English</option>
+          <option value="ta">தமிழ் (Tamil)</option>
+          <option value="hi">हिन्दी (Hindi)</option>
+          <option value="te">తెలుగు (Telugu)</option>
+          <option value="kn">ಕನ್ನಡ (Kannada)</option>
+          <option value="ml">മലയാളം (Malayalam)</option>
+        </select>
+      </div>
+
+      <div class="explainer-body">
+        <div id="explainer-title-text" class="explainer-headline">Safe Web Address</div>
+        <p id="explainer-message-text" class="explainer-message">
+          This link looks normal. Remember never to share your bank PIN or OTP on unfamiliar pages.
+        </p>
+
+        <div id="action-box" class="action-box safe-box">
+          <div class="action-title">What to do:</div>
+          <div id="explainer-action-text" class="action-desc">
+            You can browse this website. Maintain normal security hygiene.
+          </div>
+        </div>
+
+        <div id="indicators-wrapper" class="indicators-wrapper">
+          <div class="indicators-label">Detected Indicators:</div>
+          <div id="indicators-list" class="indicators-list">
+            <span class="indicator-tag">Zero known threat signatures</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Scan Other URL -->
+    <div class="quick-scan-section">
+      <form id="quick-scan-form" class="quick-form">
+        <input type="text" id="manual-url-input" placeholder="Inspect another URL..." class="quick-input" />
+        <button type="submit" class="quick-btn">Check</button>
+      </form>
+    </div>
+
+    <!-- Footer -->
+    <footer class="ext-footer">
+      <span>Zero-Network ML Analysis</span>
+      <span class="separator">·</span>
+      <span>URL Guard v1.0</span>
+    </footer>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

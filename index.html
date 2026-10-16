@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>URL Guard | AI-Based Malicious URL Detection</title>
+  <meta name="description" content="Production-grade, zero-network URL inspection with domain-grouped Random Forest ML, Recharts history visualization, browser extension, and elderly-friendly NLP warning explainer in English, Tamil, Hindi, Telugu, Kannada, and Malayalam.">
+  <meta property="og:title" content="URL Guard | AI-Based Malicious URL Detection">
+  <meta property="og:description" content="Inspect lexical structures, heuristic indicators, calibrated ML thresholds, and access multilingual warnings for elderly users.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+Tamil:wght@400;600&family=Noto+Sans+Devanagari:wght@400;600&family=Noto+Sans+Telugu:wght@400;600&family=Noto+Sans+Kannada:wght@400;600&family=Noto+Sans+Malayalam:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', '"Noto Sans Tamil"', '"Noto Sans Devanagari"', '"Noto Sans Telugu"', '"Noto Sans Kannada"', '"Noto Sans Malayalam"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #0b0f19;
+      color: #e2e8f0;
+      font-family: 'Plus Jakarta Sans', 'Noto Sans Tamil', 'Noto Sans Devanagari', 'Noto Sans Telugu', 'Noto Sans Kannada', 'Noto Sans Malayalam', sans-serif;
+    }
+    .grid-bg {
+      background-size: 40px 40px;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    }
+  </style>
+</head>
+<body class="min-h-screen grid-bg text-slate-200 antialiased selection:bg-emerald-500/30">
+  <!-- Top Navigation -->
+  <header class="border-b border-slate-800/80 bg-slate-950/70 backdrop-blur-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-lg overflow-hidden border border-cyan-500/40 flex items-center justify-center shadow-lg shadow-cyan-500/20 bg-slate-950">
+          <img src="/static/icon128.png" alt="URL Guard Emblem" class="w-full h-full object-cover" />
+        </div>
+        <div>
+          <span class="text-lg font-bold tracking-tight text-white flex items-center gap-2">
+            URL Guard
+            <span class="text-[10px] font-mono tracking-wider uppercase px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Zero-Network ML</span>
+          </span>
+        </div>
+      </div>
+      <div class="flex items-center gap-3">
+        <a href="#history-chart-section" class="hidden sm:inline-flex items-center gap-1.5 text-xs text-slate-300 hover:text-white px-3 py-1.5 rounded-lg border border-slate-800 hover:border-slate-700 bg-slate-900/60 transition-colors">
+          <svg class="w-3.5 h-3.5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"/>
+          </svg>
+          Score Timeline
+        </a>
+        <a href="#extension-section" class="inline-flex items-center gap-1.5 text-xs text-emerald-400 hover:text-emerald-300 px-3 py-1.5 rounded-lg border border-emerald-900/60 bg-emerald-950/40 transition-colors">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+          </svg>
+          Browser Extension
+        </a>
+        <a href="#metrics-section" class="text-xs text-slate-400 hover:text-white transition-colors border border-slate-800 hover:border-slate-700 px-3 py-1.5 rounded-lg bg-slate-900/50">
+          Benchmarks
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">
+    <div class="text-center space-y-3 max-w-3xl mx-auto">
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+        AI-Based Malicious URL Detection System
+      </h1>
+      <p class="text-sm sm:text-base text-slate-400">
+        Inspects lexical structures, heuristic indicators, and calibrated ML probability thresholds.
+        <span class="text-emerald-400 font-medium">Includes multilingual simple warning explainer for elderly users in English, Tamil, Hindi, Telugu, Kannada, and Malayalam.</span>
+      </p>
+    </div>
+
+    <!-- URL Input Form -->
+    <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 sm:p-6 shadow-2xl backdrop-blur-sm relative overflow-hidden">
+      <div class="absolute inset-0 bg-gradient-to-r from-emerald-500/5 via-transparent to-cyan-500/5 pointer-events-none"></div>
+      
+      <form id="analyze-form" class="space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <label for="url-input" class="block text-xs font-semibold text-slate-300 uppercase tracking-wider">
+            Target URL for Inspection
+          </label>
+          <div class="flex items-center gap-2 text-xs flex-wrap">
+            <span class="text-slate-400">Explainer Language:</span>
+            <div id="form-lang-switcher" class="inline-flex rounded-lg border border-slate-700 bg-slate-950 p-0.5 flex-wrap gap-0.5">
+              <button type="button" data-lang="en" class="lang-btn px-2.5 py-1 rounded-md font-semibold text-xs transition-all bg-emerald-600 text-white cursor-pointer">
+                English
+              </button>
+              <button type="button" data-lang="ta" class="lang-btn px-2.5 py-1 rounded-md font-semibold text-xs transition-all text-slate-400 hover:text-slate-200 cursor-pointer">
+                தமிழ்
+              </button>
+              <button type="button" data-lang="hi" class="lang-btn px-2.5 py-1 rounded-md font-semibold text-xs transition-all text-slate-400 hover:text-slate-200 cursor-pointer">
+                हिन्दी
+              </button>
+              <button type="button" data-lang="te" class="lang-btn px-2.5 py-1 rounded-md font-semibold text-xs transition-all text-slate-400 hover:text-slate-200 cursor-pointer">
+                తెలుగు
+              </button>
+              <button type="button" data-lang="kn" class="lang-btn px-2.5 py-1 rounded-md font-semibold text-xs transition-all text-slate-400 hover:text-slate-200 cursor-pointer">
+                ಕನ್ನಡ
+              </button>
+              <button type="button" data-lang="ml" class="lang-btn px-2.5 py-1 rounded-md font-semibold text-xs transition-all text-slate-400 hover:text-slate-200 cursor-pointer">
+                മലയാളം
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="relative flex flex-col sm:flex-row gap-3">
+          <div class="relative flex-1">
+            <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+              </svg>
+            </div>
+            <input
+              id="url-input"
+              type="text"
+              placeholder="e.g., https://paypal.com.verify-login.xyz/account/login?ref=secure"
+              class="w-full pl-10 pr-4 py-3 bg-slate-950 border border-slate-700/80 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 transition-all text-sm font-mono"
+              required
+            />
+          </div>
+          <button
+            type="submit"
+            id="analyze-btn"
+            class="px-6 py-3 bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-white font-bold rounded-xl shadow-lg shadow-emerald-600/20 transition-all flex items-center justify-center gap-2 cursor-pointer text-sm shrink-0"
+          >
+            <span id="btn-text">Analyze URL</span>
+            <svg id="btn-spinner" class="hidden animate-spin w-4 h-4 text-white" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Quick preset examples -->
+        <div class="flex items-center gap-2 text-xs flex-wrap pt-1 text-slate-400">
+          <span class="text-slate-500">Quick Test Cases:</span>
+          <button type="button" class="preset-btn px-2.5 py-1 rounded bg-slate-800/80 hover:bg-slate-800 text-slate-300 cursor-pointer border border-slate-700/50" data-url="https://www.google.com/">
+            Legitimate Safe (Google)
+          </button>
+          <button type="button" class="preset-btn px-2.5 py-1 rounded bg-slate-800/80 hover:bg-slate-800 text-slate-300 cursor-pointer border border-slate-700/50" data-url="https://paypal.com.verify-login.xyz/account/login?ref=secure">
+            Suspicious Brand Spoof (.xyz)
+          </button>
+          <button type="button" class="preset-btn px-2.5 py-1 rounded bg-slate-800/80 hover:bg-slate-800 text-slate-300 cursor-pointer border border-slate-700/50" data-url="http://bankofamerica.com.account-update.info/login.php">
+            Suspicious Harvester (.info)
+          </button>
+          <button type="button" class="preset-btn px-2.5 py-1 rounded bg-slate-800/80 hover:bg-slate-800 text-slate-300 cursor-pointer border border-slate-700/50" data-url="http://192.168.1.1/admin">
+            Malicious Raw IP (IP Host)
+          </button>
+          <button type="button" class="preset-btn px-2.5 py-1 rounded bg-slate-800/80 hover:bg-slate-800 text-slate-300 cursor-pointer border border-slate-700/50" data-url="http://1.23.99.116:41148/bin.sh">
+            Malicious Threat Feed (IOC)
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Error Banner -->
+    <div id="error-card" class="hidden bg-red-950/40 border border-red-800/60 rounded-xl p-4 text-red-300 text-xs sm:text-sm space-y-1">
+      <div class="font-bold flex items-center gap-2 text-red-400">
+        <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <span id="error-title">Validation Error</span>
+      </div>
+      <p id="error-message" class="text-slate-300"></p>
+    </div>
+
+    <!-- Analysis Results Section -->
+    <div id="results-card" class="hidden space-y-6">
+      <!-- Verdict Banner -->
+      <div id="verdict-banner" class="rounded-2xl p-6 border transition-all relative overflow-hidden">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div class="flex items-start gap-4">
+            <div id="verdict-icon-container" class="w-14 h-14 rounded-2xl flex items-center justify-center shrink-0 shadow-lg"></div>
+            <div class="space-y-1">
+              <div class="flex items-center gap-2">
+                <span class="text-xs uppercase font-mono tracking-wider text-slate-400">Security Verdict</span>
+                <span id="verdict-basis-badge" class="text-[10px] font-mono uppercase px-2 py-0.5 rounded border"></span>
+              </div>
+              <h2 id="verdict-title" class="text-2xl sm:text-3xl font-extrabold tracking-tight"></h2>
+              <p id="verdict-summary" class="text-sm text-slate-300 max-w-2xl"></p>
+            </div>
+          </div>
+
+          <!-- Model Score Gauge -->
+          <div class="bg-slate-950/70 border border-slate-800 rounded-xl p-3.5 w-full md:w-56 text-center shrink-0">
+            <span class="text-[11px] uppercase tracking-wider text-slate-400 font-mono">Model Score</span>
+            <div class="flex items-baseline justify-center gap-1 my-1">
+              <span id="score-value" class="text-3xl font-extrabold font-mono text-white">0.00</span>
+              <span class="text-xs text-slate-500 font-mono">/ 1.00</span>
+            </div>
+            <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden relative">
+              <div id="score-bar" class="h-full rounded-full transition-all duration-700" style="width: 0%"></div>
+            </div>
+            <div class="flex justify-between text-[9px] font-mono text-slate-500 mt-1">
+              <span>Safe &lt;0.38</span>
+              <span>Suspicious (0.38-0.81)</span>
+              <span>Malicious &gt;0.81</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Normalized URL Display (Strict non-clickable) -->
+        <div class="mt-4 pt-4 border-t border-slate-800/80 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div class="text-xs font-mono text-slate-400 flex items-center gap-2 overflow-hidden">
+            <span class="text-slate-500 uppercase tracking-wider text-[10px]">Normalized:</span>
+            <span id="normalized-url-text" class="text-slate-200 truncate select-all"></span>
+          </div>
+          <button id="copy-btn" type="button" class="text-[11px] text-slate-400 hover:text-white px-2.5 py-1 rounded bg-slate-800/60 border border-slate-700/60 self-start sm:self-auto cursor-pointer flex items-center gap-1.5 transition-colors">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+            </svg>
+            <span>Copy String</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Simple Warning Explainer for Elderly and Everyday Users (Feature 2) -->
+      <div id="explainer-card" class="bg-gradient-to-br from-slate-900 via-slate-900/95 to-slate-950 border border-slate-800 rounded-2xl p-5 sm:p-6 shadow-xl space-y-4 relative overflow-hidden">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800/80 pb-4">
+          <div class="flex items-center gap-3">
+            <div id="explainer-icon-badge" class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/20 flex items-center justify-center shrink-0">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+              </svg>
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="text-xs uppercase font-mono tracking-wider font-semibold text-slate-400">Simple Warning Explainer</span>
+                <span id="explainer-badge" class="text-[10px] font-mono uppercase px-2 py-0.5 rounded border"></span>
+              </div>
+              <h3 id="explainer-title" class="text-lg sm:text-xl font-bold text-white mt-0.5"></h3>
+            </div>
+          </div>
+
+          <!-- Language Switcher Tabs for Explainer (6 Languages) -->
+          <div id="card-lang-switcher" class="flex items-center gap-1 bg-slate-950 p-1 rounded-xl border border-slate-800 self-start sm:self-auto flex-wrap">
+            <button type="button" data-lang="en" class="card-lang-btn px-2.5 py-1 rounded-lg text-xs font-semibold transition-all cursor-pointer bg-emerald-600 text-white shadow">
+              English
+            </button>
+            <button type="button" data-lang="ta" class="card-lang-btn px-2.5 py-1 rounded-lg text-xs font-semibold transition-all cursor-pointer text-slate-400 hover:text-white">
+              தமிழ்
+            </button>
+            <button type="button" data-lang="hi" class="card-lang-btn px-2.5 py-1 rounded-lg text-xs font-semibold transition-all cursor-pointer text-slate-400 hover:text-white">
+              हिन्दी
+            </button>
+            <button type="button" data-lang="te" class="card-lang-btn px-2.5 py-1 rounded-lg text-xs font-semibold transition-all cursor-pointer text-slate-400 hover:text-white">
+              తెలుగు
+            </button>
+            <button type="button" data-lang="kn" class="card-lang-btn px-2.5 py-1 rounded-lg text-xs font-semibold transition-all cursor-pointer text-slate-400 hover:text-white">
+              ಕನ್ನಡ
+            </button>
+            <button type="button" data-lang="ml" class="card-lang-btn px-2.5 py-1 rounded-lg text-xs font-semibold transition-all cursor-pointer text-slate-400 hover:text-white">
+              മലയാളം
+            </button>
+          </div>
+        </div>
+
+        <!-- Highlighted Plain-Language Message Callout Box -->
+        <div id="explainer-callout-box" class="p-4 rounded-xl border transition-colors bg-slate-950/80 border-slate-800">
+          <p id="explainer-message-text" class="text-sm sm:text-base text-slate-100 font-medium leading-relaxed"></p>
+        </div>
+
+        <!-- What it means & What you should do Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="bg-slate-950/50 border border-slate-800/80 rounded-xl p-4 space-y-1.5">
+            <span class="text-[11px] uppercase tracking-wider font-mono text-slate-400 font-semibold block flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+              <span id="explainer-label-means">What this warning means</span>
+            </span>
+            <p id="explainer-what-means" class="text-xs sm:text-sm text-slate-300 leading-relaxed"></p>
+          </div>
+
+          <div class="bg-slate-950/50 border border-slate-800/80 rounded-xl p-4 space-y-1.5">
+            <span class="text-[11px] uppercase tracking-wider font-mono text-slate-400 font-semibold block flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+              </svg>
+              <span id="explainer-label-todo">What you should do next</span>
+            </span>
+            <p id="explainer-what-todo" class="text-xs sm:text-sm text-slate-200 font-medium leading-relaxed"></p>
+          </div>
+        </div>
+
+        <!-- Elderly & Family Protection Advice Box -->
+        <div class="bg-slate-950/80 border border-slate-800 rounded-xl p-4 flex items-start gap-3">
+          <div class="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center justify-center shrink-0 mt-0.5">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+            </svg>
+          </div>
+          <div class="space-y-1">
+            <span id="explainer-label-advice" class="text-xs font-semibold text-slate-300 block">
+              Elderly & Family Protection Advice
+            </span>
+            <p id="explainer-elderly-advice" class="text-xs text-slate-300 leading-relaxed"></p>
+          </div>
+        </div>
+
+        <!-- Detected Plain-Language Indicators -->
+        <div class="space-y-2 pt-2 border-t border-slate-800/80">
+          <span id="explainer-label-indicators" class="text-[11px] font-mono uppercase tracking-wider text-slate-400 font-semibold block">
+            Identified Indicators (Plain Language)
+          </span>
+          <div id="explainer-indicators-list" class="flex flex-wrap gap-2"></div>
+        </div>
+      </div>
+
+      <!-- Evidence Triad Lanes (ML, Rules, Intel) -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <!-- Lane 1: Threat Intelligence -->
+        <div class="bg-slate-900/60 border border-slate-800 rounded-xl p-4 space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-slate-300 uppercase tracking-wider">Threat Intelligence</span>
+            <span id="intel-badge" class="text-[10px] font-mono px-2 py-0.5 rounded border"></span>
+          </div>
+          <div id="intel-content" class="text-xs text-slate-400 space-y-2"></div>
+        </div>
+
+        <!-- Lane 2: Deterministic Heuristics -->
+        <div class="bg-slate-900/60 border border-slate-800 rounded-xl p-4 space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-slate-300 uppercase tracking-wider">Heuristic Indicators</span>
+            <span id="rules-count-badge" class="text-[10px] font-mono px-2 py-0.5 rounded border"></span>
+          </div>
+          <div id="rules-content" class="text-xs text-slate-400 space-y-2 max-h-56 overflow-y-auto pr-1"></div>
+        </div>
+
+        <!-- Lane 3: Tree SHAP Local Factor Attribution -->
+        <div class="bg-slate-900/60 border border-slate-800 rounded-xl p-4 space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-slate-300 uppercase tracking-wider">Top Factor Influences</span>
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded border bg-slate-950 text-cyan-400 border-cyan-800">Tree SHAP</span>
+          </div>
+          <div id="factors-content" class="text-xs text-slate-400 space-y-2 max-h-56 overflow-y-auto pr-1"></div>
+        </div>
+      </div>
+
+      <!-- Operational Thresholds Insight -->
+      <div class="bg-slate-950 p-4 rounded-xl border border-slate-800/80 text-xs text-slate-400 space-y-2">
+        <span class="font-bold text-slate-200 block uppercase tracking-wider text-[11px]">Configured Operational Risk Classification Thresholds</span>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 font-mono text-[11px] pt-1">
+          <div class="p-2.5 rounded bg-emerald-950/20 border border-emerald-800/30 text-emerald-300">
+            <span class="font-bold block">Safe Band (Score &lt; 0.38)</span>
+            <span class="text-[10px] text-slate-400 block mt-0.5">Low risk benign profile. No malicious signatures identified.</span>
+          </div>
+          <div class="p-2.5 rounded bg-amber-950/20 border border-amber-800/30 text-amber-300">
+            <span class="font-bold block">Suspicious Band (0.38 &le; Score &le; 0.81)</span>
+            <span class="text-[10px] text-slate-400 block mt-0.5">Elevated vigilance required. Avoid entering passwords or OTPs.</span>
+          </div>
+          <div class="p-2.5 rounded bg-red-950/20 border border-red-800/30 text-red-300">
+            <span class="font-bold block">Malicious Band (Score &gt; 0.81)</span>
+            <span class="text-[10px] text-slate-400 block mt-0.5">High risk threat prediction or active threat intelligence IOC match.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recharts Historical Model Score Timeline -->
+    <section id="history-chart-section" class="space-y-4">
+      <div id="history-chart-root"></div>
+    </section>
+
+    <!-- Browser Extension Section -->
+    <section id="extension-section" class="bg-slate-900/80 border border-slate-800 rounded-2xl p-6 sm:p-8 shadow-2xl relative overflow-hidden space-y-6">
+      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-6 border-b border-slate-800/80">
+        <div class="space-y-2 max-w-xl">
+          <div class="inline-flex items-center gap-1.5 text-xs text-emerald-400 bg-emerald-950/50 border border-emerald-800/60 px-3 py-1 rounded-full">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            Manifest V3 Browser Extension Ready
+          </div>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+            Protect Your Browsing Everywhere with URL Guard Extension
+          </h2>
+          <p class="text-sm text-slate-300 leading-relaxed">
+            Get instant zero-network protection on every page you visit. The URL Guard browser extension automatically detects phishing lures, credential harvesters, and suspicious domains right in your browser toolbar with offline multilingual warnings for elderly users.
+          </p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 shrink-0">
+          <a
+            href="/static/url-guard-extension.zip"
+            download="url-guard-extension.zip"
+            class="px-5 py-3 bg-gradient-to-r from-emerald-600 to-cyan-600 hover:from-emerald-500 hover:to-cyan-500 text-white font-bold rounded-xl shadow-lg shadow-emerald-500/20 text-xs sm:text-sm text-center flex items-center justify-center gap-2 transition-all cursor-pointer"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+            </svg>
+            Download Extension (.zip)
+          </a>
+          <button
+            type="button"
+            id="toggle-simulator-btn"
+            class="px-4 py-3 bg-slate-950 hover:bg-slate-800 border border-slate-700 text-slate-200 font-semibold rounded-xl text-xs sm:text-sm transition-colors flex items-center justify-center gap-2 cursor-pointer"
+          >
+            <span>Live Popup Simulator</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Installation Guide & Interactive Simulator Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <!-- 3-Step Setup Instructions -->
+        <div class="lg:col-span-7 space-y-4">
+          <h3 class="text-sm font-bold text-white uppercase tracking-wider">How to Load the Extension in 3 Steps:</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+            <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
+              <span class="w-6 h-6 rounded-md bg-cyan-950 text-cyan-400 border border-cyan-800 font-bold font-mono flex items-center justify-center text-xs">1</span>
+              <h4 class="font-bold text-slate-200">Unzip Extension</h4>
+              <p class="text-slate-400 text-[11px] leading-relaxed">
+                Download and extract <code class="text-cyan-400">url-guard-extension.zip</code> to any folder on your computer.
+              </p>
+            </div>
+
+            <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
+              <span class="w-6 h-6 rounded-md bg-amber-950 text-amber-400 border border-amber-800 font-bold font-mono flex items-center justify-center text-xs">2</span>
+              <h4 class="font-bold text-slate-200">Enable Developer Mode</h4>
+              <p class="text-slate-400 text-[11px] leading-relaxed">
+                Open <code class="text-amber-400">chrome://extensions</code> in Chrome/Edge and toggle on <strong>Developer Mode</strong>.
+              </p>
+            </div>
+
+            <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
+              <span class="w-6 h-6 rounded-md bg-emerald-950 text-emerald-400 border border-emerald-800 font-bold font-mono flex items-center justify-center text-xs">3</span>
+              <h4 class="font-bold text-slate-200">Load Unpacked</h4>
+              <p class="text-slate-400 text-[11px] leading-relaxed">
+                Click <strong>"Load unpacked"</strong> and select the extracted folder. URL Guard is immediately active!
+              </p>
+            </div>
+          </div>
+
+          <div class="p-3 bg-slate-950/50 rounded-xl border border-slate-800 text-[11px] text-slate-400 flex items-center gap-2">
+            <svg class="w-4 h-4 text-emerald-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+            </svg>
+            <span>Compatible with Google Chrome, Microsoft Edge, Brave Browser, Opera, and Vivaldi.</span>
+          </div>
+        </div>
+
+        <!-- Extension Simulator Card -->
+        <div class="lg:col-span-5">
+          <div class="bg-slate-950 border border-slate-800 rounded-2xl p-4 shadow-xl space-y-3">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+              <div class="flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full bg-red-500"></span>
+                <span class="w-3 h-3 rounded-full bg-amber-500"></span>
+                <span class="w-3 h-3 rounded-full bg-emerald-500"></span>
+                <span class="text-xs font-mono text-slate-400 ml-2">Extension Popup Simulator</span>
+              </div>
+              <span class="text-[10px] text-emerald-400 font-mono">LIVE PREVIEW</span>
+            </div>
+
+            <!-- Simulated Extension Popup Body -->
+            <div class="bg-[#0b0f19] border border-slate-800/80 rounded-xl p-3.5 space-y-3 text-xs">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                  <img src="/static/icon128.png" alt="URL Guard" class="w-6 h-6 rounded object-cover shadow border border-cyan-500/40" />
+                  <span class="font-bold text-white">URL Guard</span>
+                </div>
+                <select id="sim-lang-select" class="bg-slate-900 border border-slate-700 text-slate-200 text-[11px] rounded px-2 py-0.5 outline-none">
+                  <option value="en">English</option>
+                  <option value="ta">தமிழ்</option>
+                  <option value="hi">हिन्दी</option>
+                  <option value="te">తెలుగు</option>
+                  <option value="kn">ಕನ್ನಡ</option>
+                  <option value="ml">മലയാളം</option>
+                </select>
+              </div>
+
+              <div class="bg-slate-900/80 p-2.5 rounded-lg border border-slate-800 flex items-center justify-between gap-3">
+                <div class="space-y-0.5">
+                  <div id="sim-verdict-badge" class="font-bold text-amber-400 text-xs">SUSPICIOUS (0.61)</div>
+                  <div id="sim-url-text" class="text-[10px] font-mono text-slate-400 truncate max-w-[200px]">paypal.com.verify-login.xyz</div>
+                </div>
+                <div class="w-10 h-10 rounded-full border-2 border-amber-500 flex items-center justify-center text-[10px] font-mono font-bold text-amber-400">
+                  0.61
+                </div>
+              </div>
+
+              <div id="sim-explainer-box" class="p-2.5 rounded-lg bg-amber-950/20 border border-amber-800/30 text-[11px] text-amber-200 space-y-1">
+                <div class="font-bold">⚠️ Warning for Users:</div>
+                <p id="sim-explainer-text" class="text-slate-300 leading-snug">
+                  This link looks unusual and may lead to a fake website. Do not enter passwords, OTPs, or banking details.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Model Benchmarks Section -->
+    <section id="metrics-section" class="bg-slate-900/40 border border-slate-800/60 rounded-2xl p-6 space-y-4">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800/60 pb-3">
+        <div>
+          <h3 class="text-base font-bold text-white">Model Metrics & Domain-Grouped Generalization</h3>
+          <p class="text-xs text-slate-400">Rigorous group-split evaluation prevents domain leakages during training.</p>
+        </div>
+        <span class="text-[11px] font-mono text-cyan-400 bg-cyan-950/40 border border-cyan-800/40 px-2 py-0.5 rounded">
+          Random Forest (34 Features)
+        </span>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+        <div class="bg-slate-950 p-3 rounded-xl border border-slate-800">
+          <span class="text-slate-400 text-[10px] uppercase font-mono">ROC-AUC Score</span>
+          <div class="text-xl font-bold font-mono text-emerald-400 mt-0.5">0.9634</div>
+        </div>
+        <div class="bg-slate-950 p-3 rounded-xl border border-slate-800">
+          <span class="text-slate-400 text-[10px] uppercase font-mono">Detection Recall</span>
+          <div class="text-xl font-bold font-mono text-cyan-400 mt-0.5">93.8%</div>
+        </div>
+        <div class="bg-slate-950 p-3 rounded-xl border border-slate-800">
+          <span class="text-slate-400 text-[10px] uppercase font-mono">Precision</span>
+          <div class="text-xl font-bold font-mono text-emerald-400 mt-0.5">95.1%</div>
+        </div>
+        <div class="bg-slate-950 p-3 rounded-xl border border-slate-800">
+          <span class="text-slate-400 text-[10px] uppercase font-mono">Inspection Latency</span>
+          <div class="text-xl font-bold font-mono text-white mt-0.5">&lt; 2 ms</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-slate-800/80 bg-slate-950/90 py-6 mt-16 text-center text-xs text-slate-500">
+    <div class="max-w-6xl mx-auto px-4 space-y-1">
+      <p class="font-medium text-slate-400">URL Guard — AI-Based Malicious URL Detection System</p>
+      <p>Zero-network string-only verification. Offline lexical rules, tree ensemble probabilities, Recharts historical analytics, and accessible multilingual warnings.</p>
+    </div>
+  </footer>
+
+  <!-- Load bundled Recharts History Component -->
+  <script src="/static/history-chart.bundle.js"></script>
+
+  <script>
+    // Strict Sanitization Helper: create text nodes to prevent XSS
+    function createSafeText(str) {
+      return document.createTextNode(String(str || ''));
+    }
+
+    // Set textContent securely
+    function setSafeText(elemId, text) {
+      const el = document.getElementById(elemId);
+      if (el) el.textContent = String(text || '');
+    }
+
+    // Current State
+    let currentLanguage = 'en';
+    let currentAnalysisData = null;
+
+    // UI elements
+    const form = document.getElementById('analyze-form');
+    const urlInput = document.getElementById('url-input');
+    const analyzeBtn = document.getElementById('analyze-btn');
+    const btnText = document.getElementById('btn-text');
+    const errorCard = document.getElementById('error-card');
+    const errorMessage = document.getElementById('error-message');
+    const errorTitle = document.getElementById('error-title');
+    const resultsCard = document.getElementById('results-card');
+    const copyBtn = document.getElementById('copy-btn');
+
+    // Language buttons in form and card
+    function updateLanguageUI(lang) {
+      currentLanguage = lang;
+      
+      // Update form buttons
+      document.querySelectorAll('#form-lang-switcher .lang-btn').forEach(btn => {
+        if (btn.getAttribute('data-lang') === lang) {
+          btn.className = 'lang-btn px-2.5 py-1 rounded-md font-semibold text-xs transition-all bg-emerald-600 text-white cursor-pointer';
+        } else {
+          btn.className = 'lang-btn px-2.5 py-1 rounded-md font-semibold text-xs transition-all text-slate-400 hover:text-slate-200 cursor-pointer';
+        }
+      });
+
+      // Update card buttons
+      document.querySelectorAll('#card-lang-switcher .card-lang-btn').forEach(btn => {
+        if (btn.getAttribute('data-lang') === lang) {
+          btn.className = 'card-lang-btn px-2.5 py-1 rounded-lg text-xs font-semibold transition-all cursor-pointer bg-emerald-600 text-white shadow';
+        } else {
+          btn.className = 'card-lang-btn px-2.5 py-1 rounded-lg text-xs font-semibold transition-all cursor-pointer text-slate-400 hover:text-white';
+        }
+      });
+
+      // Update simulator language select
+      const simSelect = document.getElementById('sim-lang-select');
+      if (simSelect) simSelect.value = lang;
+    }
+
+    // Attach click listeners to language buttons
+    document.querySelectorAll('#form-lang-switcher .lang-btn').forEach(btn => {
+      btn.addEventListener('click', () => setLanguage(btn.getAttribute('data-lang')));
+    });
+
+    document.querySelectorAll('#card-lang-switcher .card-lang-btn').forEach(btn => {
+      btn.addEventListener('click', () => setLanguage(btn.getAttribute('data-lang')));
+    });
+
+    const simSelect = document.getElementById('sim-lang-select');
+    if (simSelect) {
+      simSelect.addEventListener('change', (e) => {
+        setLanguage(e.target.value);
+        updateSimulatorExplanation(e.target.value);
+      });
+    }
+
+    const SIM_TEXTS = {
+      en: 'This link looks unusual and may lead to a fake website. Do not enter passwords, OTPs, or banking details.',
+      ta: 'இந்த லிங்க் சந்தேகமாக இருக்கிறது. உங்கள் password அல்லது OTP-ஐ இதில் கொடுக்காதீர்கள். அதிகாரப்பூர்வ தளத்தை நேரடியாகத் திறக்கவும்.',
+      hi: 'यह लिंक असामान्य लग रहा है और यह नकली वेबसाइट हो सकती है। इसमें अपना पासवर्ड या ओटीपी न डालें।',
+      te: 'ఈ లింక్ అనుమానాస్పదంగా ఉంది మరియు నకిలీ వెబ్‌సైట్ కావచ్చు. మీ పాస్‌వర్డ్ లేదా OTP ని ఇందులో నమోదు చేయవద్దు.',
+      kn: 'ಈ ಲಿಂಕ್ ಅಸಹಜವಾಗಿದೆ ಮತ್ತು ನಕಲಿ ವೆಬ್‌ಸೈಟ್ ಆಗಿರಬಹುದು. ನಿಮ್ಮ ಪಾಸ್‌ವರ್ಡ್ ಅಥವಾ OTP ಅನ್ನು ನಮೂದಿಸಬೇಡಿ.',
+      ml: 'ഈ ലിങ്ക് സംശയാസ്പദമാണ്, ഇത് വ്യാജ വെബ്‌സൈറ്റ് ആകാൻ സാധ്യതയുണ്ട്. പാസ്‌വേഡോ ഒടിപിയോ ഇതിൽ നൽകരുത്.'
+    };
+
+    function updateSimulatorExplanation(lang) {
+      const textEl = document.getElementById('sim-explainer-text');
+      if (textEl && SIM_TEXTS[lang]) {
+        textEl.textContent = SIM_TEXTS[lang];
+      }
+    }
+
+    async function setLanguage(lang) {
+      updateLanguageUI(lang);
+      if (currentAnalysisData) {
+        if (currentAnalysisData.simple_explanation?.language !== lang) {
+          try {
+            const resp = await fetch('/api/explain', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                verdict: currentAnalysisData.verdict,
+                score: currentAnalysisData.model.score,
+                ruleFlags: currentAnalysisData.evidence.rules,
+                topFactors: currentAnalysisData.evidence.model_factors,
+                intelResult: currentAnalysisData.evidence.threat_intel,
+                language: lang,
+                url: currentAnalysisData.normalized_url
+              })
+            });
+            if (resp.ok) {
+              const data = await resp.json();
+              if (data.simple_explanation) {
+                currentAnalysisData.simple_explanation = data.simple_explanation;
+                renderExplainerCard(currentAnalysisData.simple_explanation, currentAnalysisData.verdict);
+              }
+            }
+          } catch (e) {
+            console.error('Failed to update explanation language:', e);
+          }
+        } else {
+          renderExplainerCard(currentAnalysisData.simple_explanation, currentAnalysisData.verdict);
+        }
+      }
+    }
+
+    // Preset buttons
+    document.querySelectorAll('.preset-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const url = btn.getAttribute('data-url');
+        if (url) {
+          urlInput.value = url;
+          form.dispatchEvent(new Event('submit'));
+        }
+      });
+    });
+
+    // Copy normalized URL safely
+    copyBtn.addEventListener('click', () => {
+      const text = document.getElementById('normalized-url-text').textContent;
+      if (text) {
+        navigator.clipboard.writeText(text).then(() => {
+          copyBtn.querySelector('span').textContent = 'Copied!';
+          setTimeout(() => {
+            copyBtn.querySelector('span').textContent = 'Copy String';
+          }, 2000);
+        });
+      }
+    });
+
+    // Form submit handler
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const rawUrl = urlInput.value.trim();
+      if (!rawUrl) return;
+
+      // Reset states
+      errorCard.classList.add('hidden');
+      resultsCard.classList.add('hidden');
+      analyzeBtn.disabled = true;
+      btnText.textContent = 'Inspecting...';
+
+      try {
+        const resp = await fetch('/api/analyze', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ url: rawUrl, language: currentLanguage }),
+        });
+
+        const data = await resp.json();
+
+        if (!resp.ok) {
+          const detail = data.detail || {};
+          errorTitle.textContent = detail.code ? `Validation Error (${detail.code})` : 'Request Failed';
+          errorMessage.textContent = detail.message || (typeof data.detail === 'string' ? data.detail : 'Failed to inspect URL.');
+          errorCard.classList.remove('hidden');
+          return;
+        }
+
+        currentAnalysisData = data;
+        renderResults(data);
+
+        // Dispatch session event to notify Recharts timeline chart
+        window.dispatchEvent(new CustomEvent('url-guard:session-added', { detail: data }));
+      } catch (err) {
+        errorTitle.textContent = 'Connection Error';
+        errorMessage.textContent = 'Unable to reach backend service. Check network or server status.';
+        errorCard.classList.remove('hidden');
+      } finally {
+        analyzeBtn.disabled = false;
+        btnText.textContent = 'Analyze URL';
+      }
+    });
+
+    function renderResults(res) {
+      resultsCard.classList.remove('hidden');
+
+      // 1. Normalized URL display
+      setSafeText('normalized-url-text', res.normalized_url);
+
+      // 2. Score bar and gauge
+      const score = Number(res.model.score || 0);
+      setSafeText('score-value', score.toFixed(4));
+      const scoreBar = document.getElementById('score-bar');
+      const scorePct = Math.min(100, Math.max(0, Math.round(score * 100)));
+      scoreBar.style.width = `${scorePct}%`;
+
+      // 3. Verdict styling
+      const verdictBanner = document.getElementById('verdict-banner');
+      const iconContainer = document.getElementById('verdict-icon-container');
+      const verdictTitle = document.getElementById('verdict-title');
+      const verdictSummary = document.getElementById('verdict-summary');
+      const basisBadge = document.getElementById('verdict-basis-badge');
+
+      verdictBanner.className = 'rounded-2xl p-6 border transition-all relative overflow-hidden';
+      basisBadge.textContent = (res.verdict_basis || 'STANDARD').replace('_', ' ');
+
+      if (res.verdict === 'Malicious') {
+        verdictBanner.classList.add('bg-red-950/40', 'border-red-600/60');
+        iconContainer.className = 'w-14 h-14 rounded-2xl flex items-center justify-center shrink-0 shadow-lg bg-red-600 text-white';
+        iconContainer.innerHTML = '<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>';
+        verdictTitle.textContent = 'MALICIOUS TARGET';
+        verdictTitle.className = 'text-2xl sm:text-3xl font-extrabold tracking-tight mt-0.5 text-red-400';
+        verdictSummary.textContent = res.confidence_band || 'Known attack signature or high-risk prediction detected (Score > 0.81).';
+        scoreBar.className = 'h-full rounded-full transition-all duration-700 bg-red-500';
+        basisBadge.className = 'text-[10px] font-mono uppercase px-2 py-0.5 rounded border bg-red-950 text-red-300 border-red-700';
+      } else if (res.verdict === 'Suspicious') {
+        verdictBanner.classList.add('bg-amber-950/40', 'border-amber-600/60');
+        iconContainer.className = 'w-14 h-14 rounded-2xl flex items-center justify-center shrink-0 shadow-lg bg-amber-500 text-slate-950';
+        iconContainer.innerHTML = '<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>';
+        verdictTitle.textContent = 'SUSPICIOUS LINK';
+        verdictTitle.className = 'text-2xl sm:text-3xl font-extrabold tracking-tight mt-0.5 text-amber-400';
+        verdictSummary.textContent = res.confidence_band || 'Elevated vigilance recommended. Model score falls in suspicious band [0.38, 0.81].';
+        scoreBar.className = 'h-full rounded-full transition-all duration-700 bg-amber-500';
+        basisBadge.className = 'text-[10px] font-mono uppercase px-2 py-0.5 rounded border bg-amber-950 text-amber-300 border-amber-700';
+      } else {
+        verdictBanner.classList.add('bg-emerald-950/40', 'border-emerald-600/60');
+        iconContainer.className = 'w-14 h-14 rounded-2xl flex items-center justify-center shrink-0 shadow-lg bg-emerald-600 text-white';
+        iconContainer.innerHTML = '<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>';
+        verdictTitle.textContent = 'SAFE PROFILE';
+        verdictTitle.className = 'text-2xl sm:text-3xl font-extrabold tracking-tight mt-0.5 text-emerald-400';
+        verdictSummary.textContent = 'Model score < 0.38. No warning signs detected. This is not a cryptographic guarantee.';
+        scoreBar.className = 'h-full rounded-full transition-all duration-700 bg-emerald-500';
+        basisBadge.className = 'text-[10px] font-mono uppercase px-2 py-0.5 rounded border bg-emerald-950 text-emerald-300 border-emerald-700';
+      }
+
+      // 4. Render Simple Warning Explainer Card
+      renderExplainerCard(res.simple_explanation, res.verdict);
+
+      // 5. Lane 1: Threat Intelligence
+      const intelBadge = document.getElementById('intel-badge');
+      const intelContent = document.getElementById('intel-content');
+      intelContent.innerHTML = '';
+
+      const ti = res.evidence.threat_intel || {};
+      if (ti.hit) {
+        intelBadge.textContent = 'THREAT MATCH';
+        intelBadge.className = 'text-[10px] font-mono px-2 py-0.5 rounded border bg-red-950 text-red-300 border-red-700 font-bold';
+        
+        const card = document.createElement('div');
+        card.className = 'p-3 rounded-lg bg-red-950/50 border border-red-800/60 text-xs text-red-200 space-y-1';
+        
+        const h = document.createElement('div');
+        h.className = 'font-bold uppercase tracking-wider text-[11px] text-red-400';
+        h.appendChild(createSafeText(`Source: ${ti.source || 'Threat Intelligence Feed'}`));
+        
+        const d = document.createElement('div');
+        d.appendChild(createSafeText(ti.details || 'Active malicious indicator of compromise match.'));
+        
+        card.appendChild(h);
+        card.appendChild(d);
+        intelContent.appendChild(card);
+      } else {
+        intelBadge.textContent = 'NO MATCH';
+        intelBadge.className = 'text-[10px] font-mono px-2 py-0.5 rounded border bg-slate-950 text-slate-400 border-slate-800';
+        
+        const p = document.createElement('p');
+        p.className = 'text-slate-400 italic text-[11px]';
+        p.appendChild(createSafeText('No active matches found in local threat intelligence IOC feeds.'));
+        intelContent.appendChild(p);
+      }
+
+      // 6. Lane 2: Heuristic Rules
+      const rulesCountBadge = document.getElementById('rules-count-badge');
+      const rulesContent = document.getElementById('rules-content');
+      rulesContent.innerHTML = '';
+
+      const rules = res.evidence.rules || [];
+      rulesCountBadge.textContent = `${rules.length} FLAGGED`;
+
+      if (rules.length === 0) {
+        rulesCountBadge.className = 'text-[10px] font-mono px-2 py-0.5 rounded border bg-slate-950 text-emerald-400 border-emerald-900';
+        const p = document.createElement('p');
+        p.className = 'text-slate-400 italic text-[11px]';
+        p.appendChild(createSafeText('No deterministic rule violations triggered.'));
+        rulesContent.appendChild(p);
+      } else {
+        rulesCountBadge.className = 'text-[10px] font-mono px-2 py-0.5 rounded border bg-amber-950 text-amber-300 border-amber-800 font-bold';
+        rules.forEach(r => {
+          const item = document.createElement('div');
+          const isCrit = r.severity === 'critical';
+          const isHigh = r.severity === 'high';
+          item.className = `p-2.5 rounded-lg border text-[11px] space-y-0.5 ${
+            isCrit ? 'bg-red-950/40 border-red-800/60' : (isHigh ? 'bg-amber-950/40 border-amber-800/60' : 'bg-slate-950 border-slate-800')
+          }`;
+
+          const header = document.createElement('div');
+          header.className = 'flex items-center justify-between font-semibold';
+          
+          const nameSpan = document.createElement('span');
+          nameSpan.className = isCrit ? 'text-red-300' : (isHigh ? 'text-amber-300' : 'text-slate-200');
+          nameSpan.appendChild(createSafeText(r.name || r.id));
+
+          const sevBadge = document.createElement('span');
+          sevBadge.className = 'text-[9px] uppercase font-mono tracking-wider opacity-80';
+          sevBadge.appendChild(createSafeText(r.severity));
+
+          header.appendChild(nameSpan);
+          header.appendChild(sevBadge);
+
+          const desc = document.createElement('div');
+          desc.className = 'text-slate-400 text-[10px]';
+          desc.appendChild(createSafeText(r.description));
+
+          item.appendChild(header);
+          item.appendChild(desc);
+          rulesContent.appendChild(item);
+        });
+      }
+
+      // 7. Lane 3: Top Factors (Tree SHAP)
+      const factorsContent = document.getElementById('factors-content');
+      factorsContent.innerHTML = '';
+
+      const factors = res.evidence.model_factors || [];
+      if (factors.length === 0) {
+        const p = document.createElement('p');
+        p.className = 'text-slate-400 italic text-[11px]';
+        p.appendChild(createSafeText('Local attribution data unavailable.'));
+        factorsContent.appendChild(p);
+      } else {
+        factors.forEach(f => {
+          const isRisk = f.influence_type === 'risk_increasing';
+          const item = document.createElement('div');
+          item.className = 'p-2 rounded-lg bg-slate-950 border border-slate-800/80 space-y-1';
+
+          const topRow = document.createElement('div');
+          topRow.className = 'flex items-center justify-between';
+
+          const nameSpan = document.createElement('span');
+          nameSpan.className = 'font-medium text-slate-300 text-[11px]';
+          nameSpan.appendChild(createSafeText(f.human_name));
+
+          const valSpan = document.createElement('span');
+          valSpan.className = `font-mono text-[10px] font-semibold ${isRisk ? 'text-red-400' : 'text-emerald-400'}`;
+          valSpan.appendChild(createSafeText(f.influence));
+
+          topRow.appendChild(nameSpan);
+          topRow.appendChild(valSpan);
+
+          const expRow = document.createElement('div');
+          expRow.className = 'text-[10px] text-slate-500 font-mono flex justify-between';
+          expRow.appendChild(createSafeText(`Observed: ${f.feature_value}`));
+          expRow.appendChild(createSafeText(`Attribution: ${f.attribution > 0 ? '+' : ''}${f.attribution.toFixed(3)}`));
+
+          item.appendChild(topRow);
+          item.appendChild(expRow);
+          factorsContent.appendChild(item);
+        });
+      }
+
+      resultsCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // Render Explainer Card
+    function renderExplainerCard(expl, verdict) {
+      if (!expl) return;
+
+      updateLanguageUI(expl.language);
+
+      const titleEl = document.getElementById('explainer-title');
+      const badgeEl = document.getElementById('explainer-badge');
+      const iconBadgeEl = document.getElementById('explainer-icon-badge');
+      const calloutBox = document.getElementById('explainer-callout-box');
+      const messageEl = document.getElementById('explainer-message-text');
+      const meansEl = document.getElementById('explainer-what-means');
+      const todoEl = document.getElementById('explainer-what-todo');
+      const adviceEl = document.getElementById('explainer-elderly-advice');
+      const listEl = document.getElementById('explainer-indicators-list');
+
+      // Multilingual field labels
+      const LABELS = {
+        en: { means: 'What this warning means', todo: 'What you should do next', advice: 'Elderly & Family Protection Advice', indicators: 'Identified Indicators (Plain Language)' },
+        ta: { means: 'இந்த எச்சரிக்கையின் எளிய விளக்கம்', todo: 'நீங்கள் அடுத்து என்ன செய்ய வேண்டும்', advice: 'முதியோர் மற்றும் குடும்பத்திற்கான பாதுகாப்பு விதி', indicators: 'கண்டறியப்பட்ட காரணங்கள் (எளிய வடிவில்)' },
+        hi: { means: 'इस चेतावनी का सरल अर्थ', todo: 'आगे आपको क्या करना चाहिए', advice: 'बुजुर्गों और परिवार की सुरक्षा सलाह', indicators: 'पहचाने गए मुख्य संकेत' },
+        te: { means: 'ఈ హెచ్చరిక యొక్క అర్థం', todo: 'మీరు తర్వాత ఏమి చేయాలి', advice: 'కుటుంబం మరియు పెద్దల భద్రతా సలహా', indicators: 'గుర్తించబడిన అంశాలు' },
+        kn: { means: 'ಈ ಎಚ್ಚರಿಕೆಯ ಸರಳ ಅರ್ಥ', todo: 'ಮುಂದೆ ನೀವು ಏನು ಮಾಡಬೇಕು', advice: 'ಹಿರಿಯರ ಮತ್ತು ಕುಟುಂಬದ ಭದ್ರತಾ ಸಲಹೆ', indicators: 'ಕಂಡುಬಂದ ಪ್ರಮುಖ ಅಂಶಗಳು' },
+        ml: { means: 'ഈ മുന്നറിയിപ്പിന്റെ അർത്ഥം', todo: 'ഇനി നിങ്ങൾ എന്ത് ചെയ്യണം', advice: 'മുതിർന്നവർക്കും കുടുംബത്തിനുമുള്ള സുരക്ഷാ നിർദ്ദേശം', indicators: 'കണ്ടെത്തിയ കാരണങ്ങൾ' }
+      };
+
+      const curLabels = LABELS[expl.language] || LABELS.en;
+      setSafeText('explainer-label-means', curLabels.means);
+      setSafeText('explainer-label-todo', curLabels.todo);
+      setSafeText('explainer-label-advice', curLabels.advice);
+      setSafeText('explainer-label-indicators', curLabels.indicators);
+
+      titleEl.textContent = expl.title || 'Security Guidance';
+      badgeEl.textContent = expl.badge || expl.verdict;
+
+      // Color scheme based on preserved verdict
+      if (verdict === 'Malicious') {
+        badgeEl.className = 'text-[10px] font-mono uppercase px-2 py-0.5 rounded border bg-red-950 text-red-300 border-red-700';
+        iconBadgeEl.className = 'w-10 h-10 rounded-xl bg-red-500/10 text-red-400 border border-red-500/20 flex items-center justify-center shrink-0';
+        calloutBox.className = 'p-4 rounded-xl border bg-red-950/30 border-red-800/60 shadow-inner';
+      } else if (verdict === 'Suspicious') {
+        badgeEl.className = 'text-[10px] font-mono uppercase px-2 py-0.5 rounded border bg-amber-950 text-amber-300 border-amber-700';
+        iconBadgeEl.className = 'w-10 h-10 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/20 flex items-center justify-center shrink-0';
+        calloutBox.className = 'p-4 rounded-xl border bg-amber-950/30 border-amber-800/60 shadow-inner';
+      } else {
+        badgeEl.className = 'text-[10px] font-mono uppercase px-2 py-0.5 rounded border bg-emerald-950 text-emerald-300 border-emerald-700';
+        iconBadgeEl.className = 'w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center justify-center shrink-0';
+        calloutBox.className = 'p-4 rounded-xl border bg-emerald-950/30 border-emerald-800/60 shadow-inner';
+      }
+
+      messageEl.textContent = expl.message || expl.summary;
+      meansEl.textContent = expl.what_it_means;
+      todoEl.textContent = expl.what_to_do;
+      adviceEl.textContent = expl.elderly_advice;
+
+      // Render plain indicators
+      listEl.innerHTML = '';
+      const points = expl.detected_points || [];
+      if (points.length === 0) {
+        const span = document.createElement('span');
+        span.className = 'text-xs text-slate-500 font-mono';
+        span.appendChild(createSafeText('No suspicious indicators found'));
+        listEl.appendChild(span);
+      } else {
+        points.forEach(pt => {
+          const chip = document.createElement('span');
+          chip.className = 'inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs bg-slate-950 border border-slate-800 text-slate-300';
+          const dot = document.createElement('span');
+          dot.className = `w-1.5 h-1.5 rounded-full ${verdict === 'Malicious' ? 'bg-red-400' : (verdict === 'Suspicious' ? 'bg-amber-400' : 'bg-emerald-400')}`;
+          chip.appendChild(dot);
+          chip.appendChild(createSafeText(pt));
+          listEl.appendChild(chip);
+        });
+      }
+    }
+  </script>
+</body>
+</html>
